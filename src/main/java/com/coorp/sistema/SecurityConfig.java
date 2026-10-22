@@ -49,7 +49,7 @@ public class SecurityConfig {
                 
                 
                 // Relatório
-                .requestMatchers("/api/relatorios/**").permitAll()
+               // .requestMatchers("/api/relatorios/**").permitAll()
 
                 // 4. Qualquer outra requisição para /api/**: exige autenticação (ter um token válido)
                 .requestMatchers("/api/**").authenticated()
