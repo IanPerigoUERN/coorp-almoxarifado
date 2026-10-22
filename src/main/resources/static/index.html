@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<script>
+	    // Verifica se o usuário tem um token. Se não tiver, manda para o login.
+	    if (!localStorage.getItem('token')) {
+	        window.location.href = '/login.html';
+	    }
+	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coorp - Sistema de Almoxarifado</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Ícone para a aba do navegador -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>📦 Coorp</h1>
+            <span>Controle de Almoxarifado</span>
+        </div>
+		<div style="margin-left: auto; display: flex; gap: 10px;">
+		<button onclick="window.location.href='/consulta.html'" class="btn-primary">🔍 Consultar Produtos</button>
+
+		<button onclick="logout()" class="btn-delete" style="margin-left: auto;">Sair</button>
+    </header>
+
+    <main>
+        <!-- Seção de Cadastro -->
+        <section class="card">
+            <h2 id="formTitle">Cadastrar Novo Produto</h2>
+            <form id="formProduto">
+                <input type="hidden" id="produtoId">
+                
+                <div class="input-group">
+                    <label for="nome">Nome do Produto *</label>
+                    <input type="text" id="nome" placeholder="Ex: Caneta Esferográfica Azul" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" placeholder="Ex: Material de escritório, ponta fina">
+                </div>
+
+                <div class="row">
+                    <div class="input-group">
+                        <label for="quantidade">Qtd. Atual *</label>
+                        <input type="number" id="quantidade" min="0" placeholder="Ex: 50" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="quantidadeMinima">Qtd. Mínima *</label>
+                        <input type="number" id="quantidadeMinima" min="1" placeholder="Ex: 10" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="preco">Preço (R$) *</label>
+                        <input type="number" step="0.01" id="preco" min="0" placeholder="Ex: 2.50" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btnSalvar" class="btn-primary">Cadastrar Produto</button>
+                    <button type="button" id="btnCancelar" class="btn-secondary" style="display: none;" onclick="cancelarEdicao()">Cancelar Edição</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção de Listagem -->
+        <section class="card">
+            <div class="table-header">
+                <h2>Produtos em Estoque</h2>
+                <div class="search-box">
+                    <input type="text" id="inputBusca" placeholder="Buscar por nome..." onkeyup="buscarProdutos()">
+                    <button onclick="carregarProdutos()" class="btn-refresh" title="Atualizar Lista">🔄</button>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table id="tabelaProdutos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Qtd.</th>
+                            <th>Qtd. Mín.</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Linhas inseridas via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="mensagemVazia" class="empty-state" style="display: none;">
+                Nenhum produto cadastrado ou encontrado.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Coorp - Sistema de Almoxarifado | Desenvolvido para a disciplina de Desenvolvimento de Sistemas Corporativos</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

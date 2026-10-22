@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	
+    <meta charset="UTF-8">
+    <title>Coorp - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
+        .login-card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .login-card h2 { text-align: center; margin-bottom: 1.5rem; }
+        .error { color: red; text-align: center; margin-top: 1rem; display: none; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>📦 Coorp - Almoxarifado</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Login</label>
+                <input type="text" id="login" required>
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" id="senha" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Entrar</button>
+        </form>
+        <div id="errorMsg" class="error">Login ou senha inválidos!</div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const login = document.getElementById('login').value;
+            const senha = document.getElementById('senha').value;
+
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ login, senha })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // Salva o token no localStorage do navegador
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
+                // Redireciona para o sistema
+                window.location.href = '/index.html';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

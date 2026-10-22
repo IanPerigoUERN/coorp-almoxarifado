@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+*.launch
+
+# IntelliJ (se usar)
+.idea/
+*.iml
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Banco de dados local (se tiver arquivos .db)
+*.db
+*.sqlite
